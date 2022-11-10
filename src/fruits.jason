@@ -1,0 +1,10 @@
+[
+   {
+        "src" : "/fruits/apple.svg",
+        "matched": false,
+   }, 
+   {
+        "src": "/fruits/avocado.svg",
+        "matched": false,
+   },
+]
