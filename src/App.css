@@ -41,6 +41,7 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
+    transform-style: preserve-3d;
     transition: transform .7s;
 }
 
@@ -59,7 +60,7 @@ h1 {
 }
 
 .card.matched {
-    transform: translate(180deg);
+    transform: rotateY('180deg');
 }
 
 button {

@@ -4,10 +4,12 @@ import './App.css';
 
 function Card({fruit, flipped, chooseCard }) {
 
-  const cardClickHandle = () => chooseCard(fruit);
+  const cardClickHandle = () => {
+    chooseCard(fruit)
+  };
 
   return <div className={`card ${flipped ? 'matched' : ''}`} onClick={cardClickHandle}>
-    <img src={fruit.src} />
+    <img style={{transform:'rotateY(180deg)'}} src={fruit.src} />
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
         <path d="M8 8a3.5 3 0 0 1 3.5 -3h1a3.5 3 0 0 1 3.5 3a3 3 0 0 1 -2 3a3 4 0 0 0 -2 4"></path>
@@ -30,11 +32,55 @@ function App() {
     setFruits(allFruits) 
   }
 
+  const resetGame = () => {
+    setFruits(prevFruits => {
+      return prevFruits.map(item => {
+        if(item.matched){
+          return{...item, matched: false}
+        }
+
+        return item
+      })
+    })
+
+    setFruitOne(null)
+    setFruitTwo(null)
+
+    setTimeout(() => {
+      initGame()
+    }, 500)
+  }
+
+  const chooseCard = (fruit) => {
+    fruitOne ? setFruitTwo(fruit) : setFruitOne(fruit)
+  }
+
+  useEffect(() => {
+    if(fruitOne && FruitTwo) {
+      if(fruitOne.src === FruitTwo.src){
+        setFruits(prevFruits => {
+          return prevFruits.map(item => {
+            if(item.src === fruitOne.src){
+              return { ...item, matched: true}
+            }else {
+              return item
+            }
+          })
+        })
+      }
+
+      setTimeout(() => {
+        setFruitOne(null)
+        setFruitTwo(null)
+      }, 500)
+    }
+  }, [fruitOne, FruitTwo])
+
   return (<>
     <h1>Memory Game</h1>
     {
       fruits.length ? <>
-        <button className='reset'>
+        <button onClick={resetGame} className='reset'>
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-reload" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
             <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1.002 7.935 1.007 9.425 4.747"></path>
