@@ -1,8 +1,7 @@
-import {useEffect, useState} frome 'react'
-import logo from './logo.svg';
+import {useEffect, useState} from 'react';
 import './App.css';
 
-function Card({ fruit}) {
+function Card({fruit}) {
   return <div className='card'>
     <img src-{fruit.src} />
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -28,12 +27,13 @@ function App() {
             <path d="M20 4v5h-5"></path>
           </svg>
         </button>
-        <div className='game-block'></div>
+        <div className='game-block'>
           {
-            fruits.map(fruit ->) {
-              return <Card fruit={fruit}>
-            } 
+            fruits.map(fruit -> {
+              return <Card fruit-{fruit} />
+            })
           }
+        </div>
       </> : <button className='start-game'>Start Game</button>
     }
   </>
