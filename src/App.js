@@ -1,0 +1,12 @@
+import {useEffect, useState} frome 'react'
+import logo from './logo.svg';
+import './App.css';
+
+function App() {
+  return (<>
+    <h1>Memory Game</h1>
+  </>
+  );
+}
+
+export default App;
