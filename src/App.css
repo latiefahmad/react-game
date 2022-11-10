@@ -60,7 +60,7 @@ h1 {
 }
 
 .card.matched {
-    transform: rotateY('180deg');
+    transform: rotateY(180deg);
 }
 
 button {
