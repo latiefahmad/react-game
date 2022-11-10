@@ -18,5 +18,9 @@
    {
         "src": "/fruits/pineapple.svg",
         "matched": false,
+   },
+   {
+          "src": "/fruits/banana.svg"
+          "matched": false;
    }
 ]

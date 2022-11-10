@@ -2,8 +2,11 @@ import {useEffect, useState} from 'react';
 import fruitItems from "./fruits.json"
 import './App.css';
 
-function Card({fruit}) {
-  return <div className='card'>
+function Card({fruit, flipped, chooseCard }) {
+
+  const cardClickHandle = () => chooseCard(fruit);
+
+  return <div className={`card ${flipped ? 'matched' : ''}`} onClick={cardClickHandle}>
     <img src={fruit.src} />
       <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-question-mark" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
         <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
@@ -16,6 +19,16 @@ function Card({fruit}) {
 function App() {
 
   const [fruits, setFruits] = useState([])
+  const [fruitOne, setFruitOne] = useState(null)
+  const [FruitTwo, setFruitTwo] = useState(null)
+
+  const initGame =  () => {
+    const allFruits = [...fruitItems, ...fruitItems]
+    .sort (() => Math.random() - .5)
+    .map(item => ({...item, id: Math.random() }))
+
+    setFruits(allFruits) 
+  }
 
   return (<>
     <h1>Memory Game</h1>
@@ -30,12 +43,17 @@ function App() {
         </button>
         <div className='game-block'>
           {
-            fruits.map(fruit => {
-              return <Card fruit={fruit} />
+            fruits.map((fruit, key) => {
+              return <Card 
+                key={key}
+                fruit={fruit}
+                  chooseCard={chooseCard}
+                  flipped={fruit === fruitOne || fruit === FruitTwo || fruit.matched}
+              />
             })
           }
         </div>
-      </> : <button className='start-game'>Start Game</button>
+      </> : <button onClick={initGame} className='start-game'>Start Game</button>
     }
   </>
   );
