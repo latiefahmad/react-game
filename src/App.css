@@ -91,3 +91,11 @@ button.reset {
     right: 1rem;
     border-radius: 100px;
 }
+
+footer {
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0rem;
+    right: 2rem;
+}
