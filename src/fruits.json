@@ -20,7 +20,23 @@
         "matched": false
    },
    {
-          "src": "/fruits/banana.svg",
-          "matched": false
+        "src": "/fruits/banana.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/eggplant.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/kiwi.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/pomegranate.svg",
+        "matched": false
+   }
+   {
+        "src": "/fruits/watermelon.svg",
+        "matched": false
    }
 ]
