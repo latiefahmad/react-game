@@ -70,6 +70,56 @@ function GameStats({ score, moves, timeLeft, difficulty }) {
   );
 }
 
+function GameResultModal({ isOpen, isWin, score, moves, timeLeft, onPlayAgain, onClose }) {
+  if (!isOpen) return null;
+
+  return (
+    <div className="modal-overlay" onClick={onClose}>
+      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose}>×</button>
+        
+        <div className={`result-content ${isWin ? 'win' : 'lose'}`}>
+          <div className="result-icon">
+            {isWin ? '🎉' : '⏰'}
+          </div>
+          
+          <h2>{isWin ? 'Selamat! Game Selesai!' : 'Waktu Habis!'}</h2>
+          
+          <div className="result-stats">
+            <div className="result-stat">
+              <span className="stat-icon">🏆</span>
+              <span className="stat-text">Skor Akhir: <strong>{score}</strong></span>
+            </div>
+            
+            {isWin && (
+              <div className="result-stat">
+                <span className="stat-icon">👣</span>
+                <span className="stat-text">Total Langkah: <strong>{moves}</strong></span>
+              </div>
+            )}
+            
+            {isWin && timeLeft > 0 && (
+              <div className="result-stat">
+                <span className="stat-icon">⏱️</span>
+                <span className="stat-text">Sisa Waktu: <strong>{timeLeft}s</strong></span>
+              </div>
+            )}
+          </div>
+          
+          <div className="modal-buttons">
+            <button onClick={onPlayAgain} className="play-again-btn">
+              🎮 Main Lagi
+            </button>
+            <button onClick={onClose} className="continue-btn">
+              👀 Lihat Hasil
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function App() {
 
   const [fruits, setFruits] = useState([])
@@ -84,6 +134,7 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(0)
   const [gameOver, setGameOver] = useState(false)
   const [timer, setTimer] = useState(null)
+  const [showResultModal, setShowResultModal] = useState(false)
 
   const initGame = (selectedDifficulty) => {
     const numPairs = selectedDifficulty.pairs;
@@ -115,6 +166,7 @@ function App() {
     setMoves(0)
     setTimeLeft(0)
     setGameOver(false)
+    setShowResultModal(false)
     if (timer) {
       clearInterval(timer)
       setTimer(null)
@@ -169,6 +221,7 @@ function App() {
       if (allMatched && !gameCompleted) {
         setGameCompleted(true);
         setShowConfetti(true);
+        setShowResultModal(true);
         if (timer) {
           clearInterval(timer);
           setTimer(null);
@@ -188,6 +241,7 @@ function App() {
         setTimeLeft(prev => {
           if (prev <= 1) {
             setGameOver(true);
+            setShowResultModal(true);
             return 0;
           }
           return prev - 1;
@@ -208,6 +262,15 @@ function App() {
     }
   }, [gameOver, timer])
 
+  const handlePlayAgain = () => {
+    setShowResultModal(false);
+    resetGame();
+  };
+
+  const handleCloseModal = () => {
+    setShowResultModal(false);
+  };
+
   return (
     <div className="app-container">
       <h1>Memory Game</h1>
@@ -225,23 +288,6 @@ function App() {
             timeLeft={timeLeft}
             difficulty={difficulty}
           />
-          
-          {gameOver && !gameCompleted && (
-            <div className="game-over">
-              <h2>Waktu Habis!</h2>
-              <p>Skor Akhir: {score}</p>
-              <button onClick={resetGame} className="play-again-btn">Main Lagi</button>
-            </div>
-          )}
-          
-          {gameCompleted && (
-            <div className="game-completed">
-              <h2>Selamat! Game Selesai!</h2>
-              <p>Skor Akhir: {score}</p>
-              <p>Total Langkah: {moves}</p>
-              <button onClick={resetGame} className="play-again-btn">Main Lagi</button>
-            </div>
-          )}
           
           {fruits.length ? <>
             <button onClick={resetGame} className='reset'>
@@ -266,6 +312,16 @@ function App() {
           </> : null}
         </>
       )}
+      
+      <GameResultModal
+        isOpen={showResultModal}
+        isWin={gameCompleted}
+        score={score}
+        moves={moves}
+        timeLeft={timeLeft}
+        onPlayAgain={handlePlayAgain}
+        onClose={handleCloseModal}
+      />
       
       <Confetti 
         isActive={showConfetti} 

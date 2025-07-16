@@ -50,8 +50,8 @@ h1 {
 .game-block {
     gap: clamp(0.1rem, 0.8vw, 0.4rem);
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     max-width: min(90vw, 750px);
     width: 100%;
     padding: 0;
@@ -59,6 +59,123 @@ h1 {
     margin: clamp(0.3rem, 1vw, 0.5rem) auto;
     max-height: 65vh;
     overflow: visible;
+}
+
+/* Specific grid layouts for each difficulty */
+.game-block.easy {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.game-block.medium {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+}
+
+.game-block.hard {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+}
+
+.game-block.extreme {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    max-height: 75vh; /* Increase height for extreme level */
+    max-width: min(85vw, 650px); /* Slightly smaller width for better fit */
+}
+
+/* Compact layout for extreme level */
+.app-container:has(.game-block.extreme) h1 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
+    margin: clamp(0.2rem, 0.8vw, 0.5rem) 0 !important;
+}
+
+.app-container:has(.game-block.extreme) .game-stats {
+    margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0 !important;
+    gap: clamp(0.3rem, 1vw, 0.5rem) !important;
+}
+
+.app-container:has(.game-block.extreme) .stat {
+    padding: clamp(0.4rem, 1vw, 0.6rem) clamp(0.6rem, 1.5vw, 0.8rem) !important;
+}
+
+/* Large screen optimizations for extreme level */
+@media screen and (min-width: 1024px) {
+    .game-block.extreme {
+        max-height: 80vh;
+        max-width: min(80vw, 700px);
+        gap: clamp(0.3rem, 1vw, 0.6rem);
+    }
+    
+    .game-block.extreme .card {
+        max-width: min(90px, 12vw);
+    }
+}
+
+/* Very large screens */
+@media screen and (min-width: 1440px) {
+    .game-block.extreme {
+        max-height: 85vh;
+        max-width: min(75vw, 800px);
+    }
+    
+    .game-block.extreme .card {
+        max-width: min(100px, 10vw);
+    }
+}
+
+/* Responsive grid layouts */
+@media screen and (max-width: 768px) {
+    .game-block.easy {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .game-block.medium {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+    }
+    
+    .game-block.hard {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+    
+    .game-block.extreme {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+}
+
+/* Mobile Portrait - Optimize for smaller screens */
+@media screen and (max-width: 480px) {
+    .game-block.easy {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+    
+    .game-block.medium {
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+    .game-block.hard {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+    
+    .game-block.extreme {
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(6, 1fr);
+    }
+}
+
+/* Very small screens */
+@media screen and (max-width: 360px) {
+    .game-block.extreme {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(9, 1fr);
+    }
 }
 
 .card {
@@ -255,9 +372,11 @@ footer {
     display: flex;
     gap: clamp(0.3rem, 2vw, 1rem);
     justify-content: center;
-    margin: clamp(0.5rem, 1.5vw, 0.8rem) 0;
+    margin: clamp(1.2rem, 3vw, 1.8rem) 0;
     flex-wrap: wrap;
     padding: 0 0.5rem;
+    position: relative;
+    z-index: 5;
 }
 
 .stat {
@@ -347,363 +466,167 @@ footer {
     box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
-/* Responsive Grid Layouts */
-.game-block.easy {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: clamp(0.4rem, 1.5vw, 0.8rem);
-}
-
-.game-block.medium {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: clamp(0.3rem, 1.2vw, 0.6rem);
-}
-
-.game-block.hard {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 0.2rem 0.1rem !important; /* row-gap column-gap */
-    max-height: 50vh;
-}
-
-.game-block.extreme {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 0.15rem 0.08rem !important; /* row-gap column-gap */
-    max-height: 70vh;
-}
-
-/* Card sizing for different difficulty levels */
-.game-block.hard .card {
-    max-width: min(80px, 12vw);
-    min-width: 35px;
-}
-
-.game-block.extreme .card {
-    max-width: min(65px, 10vw);
-    min-width: 30px;
-}
-
-/* Large Screens (Desktop) */
-@media screen and (min-width: 1200px) {
-    .game-block {
-        max-width: 900px;
-    }
-    
-    .card {
-        max-width: 140px;
-    }
-    
-    h1 {
-        font-size: clamp(3rem, 8vw, 5rem);
-        margin-bottom: 2rem;
-        margin-top: 2rem;
-    }
-    
-    .difficulty-selector h2 {
-        font-size: clamp(2rem, 5vw, 3rem);
-        margin-bottom: 2rem;
-    }
-    
-    .difficulty-buttons {
-        gap: 2.5rem;
-        padding: 0 3rem;
-    }
-    
-    .difficulty-btn {
-        padding: 1.8rem 3rem;
-        min-width: 200px;
-        font-size: clamp(1.2rem, 3vw, 1.6rem);
-        border-radius: 20px;
-    }
-    
-    .diff-name {
-        font-size: clamp(1.4rem, 3.5vw, 2rem);
-    }
-    
-    .diff-info {
-        font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    }
-}
-
-/* Tablet Styles (iPad Air, etc.) */
-@media screen and (min-width: 768px) and (max-width: 1199px) {
-    h1 {
-        font-size: clamp(2.5rem, 7vw, 4rem);
-        margin-bottom: 1.5rem;
-        margin-top: 1.5rem;
-    }
-    
-    .difficulty-selector h2 {
-        font-size: clamp(1.8rem, 4.5vw, 2.5rem);
-        margin-bottom: 1.5rem;
-    }
-    
-    .difficulty-buttons {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        gap: clamp(1.5rem, 4vw, 2.5rem);
-        justify-items: center;
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 0 2rem;
-    }
-    
-    .difficulty-btn {
-        padding: clamp(1.5rem, 4vw, 2rem) clamp(2rem, 5vw, 3rem);
-        min-width: clamp(180px, 35vw, 250px);
-        width: 100%;
-        max-width: 280px;
-        font-size: clamp(1.1rem, 3vw, 1.5rem);
-        border-radius: 15px;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.25);
-    }
-    
-    .diff-name {
-        font-size: clamp(1.3rem, 3.5vw, 1.8rem);
-        margin-bottom: 0.5rem;
-    }
-    
-    .diff-info {
-        font-size: clamp(1rem, 2.5vw, 1.3rem);
-    }
-    
-    /* Tablet specific game layouts */
-    .game-block.hard {
-        gap: 0.15rem 0.08rem !important; /* row-gap column-gap */
-        max-height: 50vh;
-    }
-    
-    .game-block.extreme {
-        gap: 0.12rem 0.06rem !important; /* row-gap column-gap */
-        max-height: 65vh;
-    }
-    
-    .game-block.hard .card {
-        max-width: min(75px, 11vw);
-    }
-    
-    .game-block.extreme .card {
-        max-width: min(60px, 9vw);
-    }
-    
-    .difficulty-btn:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-    }
-}
-
-/* Tablet Landscape */
-@media screen and (max-width: 1024px) {
-    .game-block {
-        max-width: 85vw;
-    }
-    
-    .card {
-        max-width: min(100px, 12vw);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
-}
-
-/* Tablet Portrait */
-@media screen and (max-width: 768px) {
-    body {
-        padding: 0.5rem;
-    }
-    
-    .game-block {
-        max-width: 90vw;
-    }
-    
-    .card {
-        max-width: min(80px, 14vw);
-    }
-    
-    .difficulty-buttons {
-        gap: 0.5rem;
-    }
-    
-    .difficulty-btn {
-        min-width: clamp(90px, 25vw, 110px);
-        padding: 0.8rem 1rem;
-    }
-    
-    .game-stats {
-        gap: 0.5rem;
-        margin: 0.5rem 0;
-    }
-    
-    .stat {
-        min-width: clamp(50px, 18vw, 70px);
-    }
-    
-    .game-block.easy {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .game-block.medium {
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.hard {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
-}
-
-/* Mobile Portrait */
-@media screen and (max-width: 767px) {
-    .difficulty-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8rem;
-    }
-    
-    .difficulty-btn {
-        width: 90%;
-        max-width: 280px;
-        padding: 1.2rem 1.5rem;
-    }
-    
-    .game-stats {
-        gap: 0.3rem;
-        margin: 0.5rem 0;
-    }
-    
-    .stat {
-        padding: 0.5rem 0.6rem;
-        min-width: clamp(45px, 20vw, 60px);
-    }
-    
-    .stat-label {
-        font-size: 0.6rem;
-    }
-    
-    .stat-value {
-        font-size: 0.9rem;
-    }
-    
-    .game-over, .game-completed {
-        padding: 1rem;
-        margin: 0.5rem;
-    }
-    
-    .game-block.easy {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .game-block.medium {
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.hard {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
-}
-
-/* Very Small Mobile */
-@media screen and (max-width: 360px) {
-    .card {
-        max-width: min(60px, 13vw);
-    }
-    
-    .game-block {
-        gap: clamp(0.2rem, 1vw, 0.4rem);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(5, 1fr);
-        grid-template-rows: repeat(7, 1fr);
-    }
-}
-
-/* Main app container */
-.app-container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: clamp(0.3rem, 1.5vw, 1rem);
+/* Modal Pop-up Styles */
+.modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.modal-content {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    max-width: 90vw;
+    width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: slideUp 0.4s ease-out;
+}
+
+.modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.modal-close:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+}
+
+.result-content {
+    text-align: center;
+    color: white;
+}
+
+.result-content.win {
+    animation: celebration 0.6s ease-out;
+}
+
+.result-content.lose {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+.result-icon {
+    font-size: clamp(3rem, 8vw, 5rem);
+    margin-bottom: 1rem;
+    animation: bounce 1s infinite;
+}
+
+.result-content h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: 1.5rem;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.result-content.win h2 {
+    color: #2ed573;
+    text-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
+}
+
+.result-content.lose h2 {
+    color: #ff4757;
+    text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+}
+
+.result-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.result-stat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+}
+
+.stat-icon {
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+}
+
+.stat-text {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.stat-text strong {
+    color: white;
+    font-weight: 700;
+}
+
+.modal-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+}
+
+.play-again-btn, .continue-btn {
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    color: white;
+    border: none;
+    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+    border-radius: 25px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    min-width: 120px;
+    position: relative;
     overflow: hidden;
-    box-sizing: border-box;
 }
 
-/* Ensure content fits in viewport */
-@media screen and (max-height: 600px) {
-    body {
-        justify-content: flex-start;
-        padding-top: 0.5rem;
-    }
-    
-    h1 {
-        margin: 0.5rem 0;
-        font-size: clamp(1.2rem, 4vw, 1.8rem);
-    }
-    
-    .difficulty-selector {
-        margin: 0.5rem 0;
-    }
-    
-    .game-stats {
-        margin: 0.5rem 0;
-    }
-    
-    .game-over, .game-completed {
-        margin: 0.5rem;
-        padding: 1rem;
-    }
+.continue-btn {
+    background: linear-gradient(45deg, #38a169, #48bb78);
 }
 
-/* Landscape orientation optimizations */
-@media screen and (orientation: landscape) and (max-height: 500px) {
-    .difficulty-buttons {
-        flex-direction: row;
-        gap: 0.5rem;
-    }
-    
-    .difficulty-btn {
-        min-width: auto;
-        padding: 0.5rem 0.8rem;
-        font-size: 0.8rem;
-    }
-    
-    .game-stats {
-        gap: 0.5rem;
-        margin: 0.3rem 0;
-    }
-    
-    .stat {
-        padding: 0.4rem 0.6rem;
-    }
+.play-again-btn:hover, .continue-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Buy Me a Coffee Button - Fixed Position */
+.play-again-btn:active, .continue-btn:active {
+    transform: translateY(-1px);
+}
+
+/* Buy Me a Coffee Button - Fixed Position (for Ko-fi button in index.html) */
 .buy-coffee-fixed {
     position: fixed;
     bottom: clamp(1rem, 3vw, 1.5rem);
@@ -736,46 +659,126 @@ footer {
     height: auto;
 }
 
-/* Special handling for short screens */
-@media screen and (max-height: 700px) {
-    h1 {
-        font-size: clamp(1.5rem, 4vw, 2.5rem);
-        margin: clamp(0.3rem, 1vw, 0.8rem) 0;
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes celebration {
+    0%, 100% {
+        transform: scale(1);
+    }
+    25% {
+        transform: scale(1.05) rotate(1deg);
+    }
+    75% {
+        transform: scale(1.05) rotate(-1deg);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0);
+    }
+    40% {
+        transform: translateY(-10px);
+    }
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+/* Responsive Modal Styles */
+@media screen and (max-width: 768px) {
+    .modal-content {
+        width: 95vw;
+        padding: clamp(1rem, 3vw, 1.5rem);
+        border-radius: 15px;
     }
     
-    .difficulty-selector h2 {
-        font-size: clamp(1.2rem, 3vw, 1.8rem);
-        margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+    .modal-close {
+        width: 35px;
+        height: 35px;
+        font-size: 20px;
+        top: 10px;
+        right: 15px;
     }
     
-    .game-stats {
-        margin: clamp(0.3rem, 1vw, 0.5rem) 0;
+    .result-stats {
+        padding: 1rem;
+        gap: 0.8rem;
     }
     
-    .game-block {
-        max-height: 55vh;
-        gap: clamp(0.2rem, 0.8vw, 0.5rem);
+    .modal-buttons {
+        flex-direction: column;
+        align-items: center;
+        gap: 0.8rem;
     }
     
-    .game-block.hard {
-        max-height: 45vh;
-        row-gap: clamp(0.03rem, 0.4vw, 0.2rem);
-        column-gap: clamp(0.01rem, 0.2vw, 0.1rem);
+    .play-again-btn, .continue-btn {
+        width: 100%;
+        max-width: 250px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .modal-content {
+        padding: 1rem;
+        border-radius: 12px;
     }
     
-    .game-block.extreme {
-        max-height: 60vh;
-        row-gap: clamp(0.02rem, 0.3vw, 0.15rem);
-        column-gap: clamp(0.005rem, 0.15vw, 0.08rem);
+    .result-stats {
+        padding: 0.8rem;
+        margin: 1rem 0;
     }
     
-    .game-block.extreme .card {
-        max-width: min(55px, 8vw);
-        min-width: 25px;
+    .result-stat {
+        font-size: clamp(0.9rem, 2vw, 1rem);
+        gap: 0.6rem;
     }
-    
-    .game-block.hard .card {
-        max-width: min(70px, 10vw);
-        min-width: 30px;
+}
+
+/* Additional spacing for extreme level to avoid reset button overlap */
+.app-container:has(.game-block.extreme) .game-stats {
+    margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0;
+}
+
+/* Mobile adjustments for extreme level stats */
+@media screen and (max-width: 768px) {
+    .app-container:has(.game-block.extreme) .game-stats {
+        margin: clamp(1.3rem, 3.5vw, 2rem) 0 clamp(0.6rem, 1.5vw, 1rem) 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .app-container:has(.game-block.extreme) .game-stats {
+        margin: clamp(1.1rem, 3vw, 1.6rem) 0 clamp(0.4rem, 1vw, 0.8rem) 0;
     }
 }
