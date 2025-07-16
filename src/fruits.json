@@ -38,5 +38,37 @@
    {
         "src": "/fruits/watermelon.svg",
         "matched": false
+   },
+   {
+        "src": "/fruits/orange.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/strawberry.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/lemon.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/peach.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/mango.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/coconut.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/papaya.svg",
+        "matched": false
+   },
+   {
+        "src": "/fruits/blueberry.svg",
+        "matched": false
    }
 ]

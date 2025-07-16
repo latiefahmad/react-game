@@ -1,0 +1,31 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="blueberryGradient" cx="0.3" cy="0.3" r="0.8">
+      <stop offset="0%" stop-color="#7FB3D3"/>
+      <stop offset="100%" stop-color="#2E86AB"/>
+    </radialGradient>
+  </defs>
+  
+  <!-- Blueberry body -->
+  <circle cx="50" cy="55" r="30" fill="url(#blueberryGradient)" stroke="#1B4F72" stroke-width="1"/>
+  
+  <!-- Blueberry crown -->
+  <path d="M35 30 L40 25 L45 30 L50 25 L55 30 L60 25 L65 30" fill="none" stroke="#27AE60" stroke-width="2" stroke-linecap="round"/>
+  
+  <!-- Crown details -->
+  <circle cx="40" r="2" fill="#229954"/>
+  <circle cx="45" r="2" fill="#229954"/>
+  <circle cx="50" r="2" fill="#229954"/>
+  <circle cx="55" r="2" fill="#229954"/>
+  <circle cx="60" r="2" fill="#229954"/>
+  
+  <!-- Blueberry texture -->
+  <circle cx="45" cy="45" r="1.5" fill="#5DADE2" opacity="0.7"/>
+  <circle cx="55" cy="48" r="1" fill="#5DADE2" opacity="0.7"/>
+  <circle cx="42" cy="65" r="1.5" fill="#5DADE2" opacity="0.7"/>
+  <circle cx="58" cy="67" r="1" fill="#5DADE2" opacity="0.7"/>
+  <circle cx="50" cy="70" r="1.2" fill="#5DADE2" opacity="0.7"/>
+  
+  <!-- Highlight -->
+  <ellipse cx="42" cy="42" rx="8" ry="12" fill="#AED6F1" opacity="0.4"/>
+</svg>
