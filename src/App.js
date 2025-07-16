@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import fruitItems from "./fruits.json"
+import Confetti from './Confetti';
 import './App.css';
 
 function Card({fruit, flipped, chooseCard }) {
@@ -23,6 +24,8 @@ function App() {
   const [fruits, setFruits] = useState([])
   const [fruitOne, setFruitOne] = useState(null)
   const [FruitTwo, setFruitTwo] = useState(null)
+  const [showConfetti, setShowConfetti] = useState(false)
+  const [gameCompleted, setGameCompleted] = useState(false)
 
   const initGame =  () => {
     const allFruits = [...fruitItems, ...fruitItems]
@@ -45,6 +48,8 @@ function App() {
 
     setFruitOne(null)
     setFruitTwo(null)
+    setGameCompleted(false)
+    setShowConfetti(false)
 
     setTimeout(() => {
       initGame()
@@ -76,6 +81,17 @@ function App() {
     }
   }, [fruitOne, FruitTwo])
 
+  // Check if game is completed
+  useEffect(() => {
+    if (fruits.length > 0) {
+      const allMatched = fruits.every(fruit => fruit.matched);
+      if (allMatched && !gameCompleted) {
+        setGameCompleted(true);
+        setShowConfetti(true);
+      }
+    }
+  }, [fruits, gameCompleted])
+
   return (<>
     <h1>Memory Game</h1>
     {
@@ -101,6 +117,10 @@ function App() {
         </div>
       </> : <button onClick={initGame} className='start-game'>Start Game</button>
     }
+    <Confetti 
+      isActive={showConfetti} 
+      onComplete={() => setShowConfetti(false)} 
+    />
     <div className='copyright-footer'>
       <div className='circle'></div>
       <span>© 2025 ltfhmd</span>
