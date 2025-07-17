@@ -1,784 +1,1021 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;800&display=swap");
 
 * {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
-html, body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden; /* Disable all scrolling */
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden; /* Only disable horizontal scrolling */
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background-image: url(../public/bg.jpg);
+  font-family: "Poppins", sans-serif;
+  background-image: url(../public/bg.jpg);
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+}
+
+/* Mobile-specific background handling */
+@media screen and (max-width: 768px) {
+  body {
+    background-attachment: scroll; /* Better performance on mobile */
     background-size: cover;
-    background-attachment: fixed;
-    background-position: center;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    text-align: center;
-    position: fixed;
-    top: 0;
-    left: 0;
+    background-repeat: no-repeat;
+  }
 }
 
 body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    box-shadow: 0 0 500px 0 black inset;
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  box-shadow: 0 0 500px 0 black inset;
+}
+
+.app-container {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: clamp(0.5rem, 2vw, 1rem);
+  box-sizing: border-box;
+  position: relative;
+  overflow-x: hidden;
 }
 
 h1 {
-    font-size: clamp(2rem, 6vw, 4rem);
-    color: white;
-    margin-bottom: clamp(0.8rem, 2vw, 1.5rem);
-    margin-top: clamp(0.8rem, 2vw, 1.5rem);
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+  font-size: clamp(2rem, 6vw, 4rem);
+  color: white;
+  margin-bottom: clamp(0.8rem, 2vw, 1.5rem);
+  margin-top: clamp(0.8rem, 2vw, 1.5rem);
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .game-block {
-    gap: clamp(0.1rem, 0.8vw, 0.4rem);
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    max-width: min(90vw, 750px);
-    width: 100%;
-    padding: 0;
-    justify-items: center;
-    margin: clamp(0.3rem, 1vw, 0.5rem) auto;
-    max-height: 65vh;
-    overflow: visible;
+  gap: clamp(0.2rem, 1vw, 0.5rem);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  max-width: min(95vw, 750px);
+  width: 100%;
+  padding: 0;
+  justify-items: center;
+  margin: clamp(0.5rem, 1.5vw, 1rem) auto;
+  max-height: 70vh;
+  overflow: visible;
+  place-items: center;
 }
 
 /* Specific grid layouts for each difficulty */
 .game-block.easy {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .game-block.medium {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(3, 1fr);
 }
 
 .game-block.hard {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(4, 1fr);
 }
 
 .game-block.extreme {
-    grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    max-height: 75vh; /* Increase height for extreme level */
-    max-width: min(85vw, 650px); /* Slightly smaller width for better fit */
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  max-height: 75vh; /* Increase height for extreme level */
+  max-width: min(85vw, 650px); /* Slightly smaller width for better fit */
 }
 
 /* Compact layout for extreme level */
 .app-container:has(.game-block.extreme) h1 {
-    font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
-    margin: clamp(0.2rem, 0.8vw, 0.5rem) 0 !important;
+  font-size: clamp(1.5rem, 4vw, 2.2rem) !important;
+  margin: clamp(0.2rem, 0.8vw, 0.5rem) 0 !important;
 }
 
 .app-container:has(.game-block.extreme) .game-stats {
-    margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0 !important;
-    gap: clamp(0.3rem, 1vw, 0.5rem) !important;
+  margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0 !important;
+  gap: clamp(0.3rem, 1vw, 0.5rem) !important;
 }
 
 .app-container:has(.game-block.extreme) .stat {
-    padding: clamp(0.4rem, 1vw, 0.6rem) clamp(0.6rem, 1.5vw, 0.8rem) !important;
+  padding: clamp(0.4rem, 1vw, 0.6rem) clamp(0.6rem, 1.5vw, 0.8rem) !important;
 }
 
 /* Large screen optimizations for extreme level */
 @media screen and (min-width: 1024px) {
-    .game-block.extreme {
-        max-height: 80vh;
-        max-width: min(80vw, 700px);
-        gap: clamp(0.3rem, 1vw, 0.6rem);
-    }
-    
-    .game-block.extreme .card {
-        max-width: min(90px, 12vw);
-    }
+  .game-block.extreme {
+    max-height: 80vh;
+    max-width: min(80vw, 700px);
+    gap: clamp(0.3rem, 1vw, 0.6rem);
+  }
+
+  .game-block.extreme .card {
+    max-width: min(90px, 12vw);
+  }
 }
 
 /* Very large screens */
 @media screen and (min-width: 1440px) {
-    .game-block.extreme {
-        max-height: 85vh;
-        max-width: min(75vw, 800px);
-    }
-    
-    .game-block.extreme .card {
-        max-width: min(100px, 10vw);
-    }
+  .game-block.extreme {
+    max-height: 85vh;
+    max-width: min(75vw, 800px);
+  }
+
+  .game-block.extreme .card {
+    max-width: min(100px, 10vw);
+  }
 }
 
-/* Responsive grid layouts */
+/* Tablet and Mobile Responsive Layouts */
 @media screen and (max-width: 768px) {
-    .game-block.easy {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .game-block.medium {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(3, 1fr);
-    }
-    
-    .game-block.hard {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
+  .app-container {
+    padding: clamp(0.3rem, 1.5vw, 0.8rem);
+  }
+
+  h1 {
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    margin: clamp(0.5rem, 1.5vw, 1rem) 0;
+  }
+
+  .game-block {
+    max-height: 65vh;
+    gap: clamp(0.15rem, 0.8vw, 0.4rem);
+  }
+
+  .game-block.easy {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .game-block.medium {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+  }
+
+  .game-block.hard {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .game-block.extreme {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    max-height: 70vh;
+  }
+
+  .difficulty-buttons {
+    padding: 0 1rem;
+    gap: clamp(0.6rem, 2.5vw, 1.5rem);
+  }
+
+  .difficulty-btn {
+    min-width: clamp(100px, 22vw, 160px);
+    padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1.2rem, 3.5vw, 2rem);
+  }
 }
 
 /* Mobile Portrait - Optimize for smaller screens */
 @media screen and (max-width: 480px) {
-    .game-block.easy {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-    }
-    
-    .game-block.medium {
-        grid-template-columns: repeat(3, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
-    
-    .game-block.hard {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
-    
-    .game-block.extreme {
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(6, 1fr);
-    }
+  .app-container {
+    padding: clamp(0.2rem, 1vw, 0.5rem);
+  }
+
+  h1 {
+    font-size: clamp(1.5rem, 4.5vw, 2.5rem);
+    margin: clamp(0.3rem, 1vw, 0.8rem) 0;
+  }
+
+  .game-block {
+    max-height: 60vh;
+    gap: clamp(0.1rem, 0.6vw, 0.3rem);
+    max-width: 98vw;
+  }
+
+  .game-block.easy {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
+
+  .game-block.medium {
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+
+  .game-block.hard {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+  }
+
+  .game-block.extreme {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    max-height: 65vh;
+  }
+
+  .difficulty-selector {
+    margin: clamp(0.8rem, 2.5vw, 1.5rem) 0;
+    padding: 0 0.5rem;
+  }
+
+  .difficulty-buttons {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .difficulty-btn {
+    width: 100%;
+    max-width: 280px;
+    min-width: auto;
+    padding: clamp(0.7rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+  }
+
+  .game-stats {
+    gap: clamp(0.2rem, 1.5vw, 0.8rem);
+    margin: clamp(1rem, 2.5vw, 1.5rem) 0;
+  }
+
+  .stat {
+    min-width: clamp(50px, 12vw, 70px);
+    padding: clamp(0.4rem, 1.5vw, 0.6rem) clamp(0.6rem, 2.5vw, 1rem);
+  }
+
+  .copyright-footer {
+    bottom: clamp(0.3rem, 1.5vw, 0.8rem);
+    font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+  }
 }
 
 /* Very small screens */
 @media screen and (max-width: 360px) {
-    .game-block.extreme {
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(9, 1fr);
-    }
+  .game-block {
+    max-height: 55vh;
+    gap: clamp(0.05rem, 0.4vw, 0.2rem);
+  }
+
+  .game-block.extreme {
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(9, 1fr);
+    max-height: 60vh;
+  }
+
+  .card {
+    min-width: 40px;
+    max-width: min(100px, 12vw);
+  }
+
+  h1 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+  }
 }
 
 .card {
-    cursor: pointer;
-    position: relative;
-    background-color: white;
-    width: 100%;
-    aspect-ratio: 13/15;
-    max-width: min(120px, 15vw);
-    min-width: 50px;
-    border-radius: clamp(5px, 1vw, 10px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-style: preserve-3d;
-    transition: transform .7s;
+  cursor: pointer;
+  position: relative;
+  background-color: white;
+  width: 100%;
+  aspect-ratio: 13/15;
+  max-width: min(120px, 15vw);
+  min-width: clamp(45px, 10vw, 60px);
+  border-radius: clamp(4px, 1vw, 10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-style: preserve-3d;
+  transition: transform 0.7s;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card img,
 .card svg {
-    width: 50%;
-    position: absolute;
-    backface-visibility: hidden;
-    pointer-events: none;
+  width: 50%;
+  position: absolute;
+  backface-visibility: hidden;
+  pointer-events: none;
 }
 
-.card svg{
-    width: clamp(40px, 60%, 100px);
-    height: clamp(40px, 60%, 100px);
-    opacity: .3;
+.card svg {
+  width: clamp(40px, 60%, 100px);
+  height: clamp(40px, 60%, 100px);
+  opacity: 0.3;
 }
 
 .card.matched {
-    transform: rotateY(180deg);
+  transform: rotateY(180deg);
 }
 
 button {
-    border: none;
-    color: black;
-    background-color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
+  border: none;
+  color: black;
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transform: scale(1.05);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
 button.start-game {
-    text-transform: uppercase;
-    font-weight: 800;
-    padding: 1.5rem 2rem;
-    letter-spacing: 2px;
-    font-size: clamp(18px, 4vw, 25px);
-    border-radius: 10px;
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  text-transform: uppercase;
+  font-weight: 800;
+  padding: 1.5rem 2rem;
+  letter-spacing: 2px;
+  font-size: clamp(18px, 4vw, 25px);
+  border-radius: 10px;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 button.reset {
-    position: absolute;
-    top: clamp(0.5rem, 2vw, 1rem);
-    right: clamp(0.5rem, 2vw, 1rem);
-    background: rgba(255,255,255,0.2);
-    border: 2px solid rgba(255,255,255,0.3);
-    border-radius: 50%;
-    width: clamp(40px, 8vw, 60px);
-    height: clamp(40px, 8vw, 60px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    backdrop-filter: blur(10px);
-    z-index: 10;
+  position: absolute;
+  top: clamp(0.5rem, 2vw, 1rem);
+  right: clamp(0.5rem, 2vw, 1rem);
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: clamp(40px, 8vw, 60px);
+  height: clamp(40px, 8vw, 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+  z-index: 10;
 }
 
 button.reset svg {
-    width: clamp(20px, 4vw, 30px);
-    height: clamp(20px, 4vw, 30px);
-    stroke: white;
+  width: clamp(20px, 4vw, 30px);
+  height: clamp(20px, 4vw, 30px);
+  stroke: white;
 }
 
 button.reset:hover {
-    background: rgba(255,255,255,0.3);
-    transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
 }
 
 footer {
-    display: flex;
-    justify-content: center;
-    position: fixed;
-    bottom: 1rem;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 10;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
 }
 
 .copyright-footer {
-    position: fixed;
-    bottom: clamp(0.5rem, 2vw, 1rem);
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: white;
-    font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-    opacity: 0.7;
-    z-index: 10;
+  position: fixed;
+  bottom: clamp(0.5rem, 2vw, 1rem);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: clamp(0.7rem, 1.5vw, 0.9rem);
+  opacity: 0.7;
+  z-index: 10;
 }
 
 .copyright-footer .circle {
-    width: clamp(3px, 1vw, 4px);
-    height: clamp(3px, 1vw, 4px);
-    background-color: white;
-    border-radius: 50%;
-    opacity: 0.6;
+  width: clamp(3px, 1vw, 4px);
+  height: clamp(3px, 1vw, 4px);
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0.6;
 }
 
 /* Difficulty Selector Styles */
 .difficulty-selector {
-    margin: clamp(1rem, 3vw, 2rem) 0;
-    text-align: center;
-    padding: 0 1rem;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  margin: clamp(1rem, 3vw, 2rem) 0;
+  text-align: center;
+  padding: 0 1rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .difficulty-selector h2 {
-    color: white;
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-    margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
-    font-weight: 600;
-    text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  color: white;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 }
 
 .difficulty-buttons {
-    display: flex;
-    gap: clamp(0.8rem, 3vw, 2rem);
-    justify-content: center;
-    flex-wrap: wrap;
-    max-width: 100%;
-    width: 100%;
-    padding: 0 2rem;
+  display: flex;
+  gap: clamp(0.8rem, 3vw, 2rem);
+  justify-content: center;
+  flex-wrap: wrap;
+  max-width: 100%;
+  width: 100%;
+  padding: 0 2rem;
 }
 
 .difficulty-btn {
-    padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
-    border: none;
-    border-radius: clamp(8px, 1.5vw, 15px);
-    color: white;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    min-width: clamp(120px, 25vw, 180px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-    gap: 0.3rem;
+  padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+  border: none;
+  border-radius: clamp(8px, 1.5vw, 15px);
+  color: white;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: clamp(120px, 25vw, 180px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  gap: 0.3rem;
 }
 
 .difficulty-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .difficulty-btn.active {
-    transform: scale(1.05);
-    box-shadow: 0 6px 25px rgba(255,255,255,0.3);
+  transform: scale(1.05);
+  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
 }
 
 .diff-name {
-    font-size: clamp(1.1rem, 3vw, 1.6rem);
-    font-weight: 700;
+  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-weight: 700;
 }
 
 .diff-info {
-    font-size: clamp(0.9rem, 2.3vw, 1.1rem);
-    opacity: 0.9;
-    font-weight: 500;
+  font-size: clamp(0.9rem, 2.3vw, 1.1rem);
+  opacity: 0.9;
+  font-weight: 500;
 }
 
 /* Game Stats Styles */
 .game-stats {
-    display: flex;
-    gap: clamp(0.3rem, 2vw, 1rem);
-    justify-content: center;
-    margin: clamp(1.2rem, 3vw, 1.8rem) 0;
-    flex-wrap: wrap;
-    padding: 0 0.5rem;
-    position: relative;
-    z-index: 5;
+  display: flex;
+  gap: clamp(0.3rem, 2vw, 1rem);
+  justify-content: center;
+  margin: clamp(1.2rem, 3vw, 1.8rem) 0;
+  flex-wrap: wrap;
+  padding: 0 0.5rem;
+  position: relative;
+  z-index: 5;
 }
 
 .stat {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: rgba(255,255,255,0.1);
-    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
-    border-radius: clamp(5px, 1vw, 10px);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.2);
-    flex: 1;
-    min-width: clamp(60px, 15vw, 80px);
-    max-width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: clamp(0.6rem, 2vw, 0.8rem) clamp(0.8rem, 3vw, 1.2rem);
+  border-radius: clamp(5px, 1vw, 10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  flex: 1;
+  min-width: clamp(60px, 15vw, 80px);
+  max-width: 120px;
 }
 
 .stat-label {
-    font-size: clamp(0.6rem, 1.5vw, 0.8rem);
-    color: rgba(255,255,255,0.8);
-    margin-bottom: 0.3rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+  font-size: clamp(0.6rem, 1.5vw, 0.8rem);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 0.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .stat-value {
-    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
-    font-weight: 800;
-    color: white;
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+  font-weight: 800;
+  color: white;
 }
 
 .stat-value.warning {
-    color: #ff4757;
-    animation: pulse 1s infinite;
+  color: #ff4757;
+  animation: pulse 1s infinite;
 }
 
 @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
 }
 
 /* Game Over/Completed Styles */
-.game-over, .game-completed {
-    background: rgba(0,0,0,0.8);
-    backdrop-filter: blur(10px);
-    padding: clamp(1rem, 3vw, 2rem);
-    border-radius: clamp(10px, 2vw, 15px);
-    margin: 1rem;
-    text-align: center;
-    border: 2px solid rgba(255,255,255,0.2);
-    max-width: 90vw;
+.game-over,
+.game-completed {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: clamp(1rem, 3vw, 2rem);
+  border-radius: clamp(10px, 2vw, 15px);
+  margin: 1rem;
+  text-align: center;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  max-width: 90vw;
 }
 
 .game-over h2 {
-    color: #ff4757;
-    margin-bottom: 1rem;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #ff4757;
+  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
 }
 
 .game-completed h2 {
-    color: #2ed573;
-    margin-bottom: 1rem;
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: #2ed573;
+  margin-bottom: 1rem;
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
 }
 
-.game-over p, .game-completed p {
-    color: white;
-    margin: 0.5rem 0;
-    font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+.game-over p,
+.game-completed p {
+  color: white;
+  margin: 0.5rem 0;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
 }
 
 .play-again-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2rem);
-    border-radius: clamp(15px, 3vw, 25px);
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 1rem;
-    font-size: clamp(0.8rem, 2vw, 1rem);
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1.5rem, 4vw, 2rem);
+  border-radius: clamp(15px, 3vw, 25px);
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
 }
 
 .play-again-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Modal Pop-up Styles */
 .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(10px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    animation: fadeIn 0.3s ease-out;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-out;
 }
 
 .modal-content {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
-    backdrop-filter: blur(20px);
-    border-radius: 20px;
-    padding: clamp(1.5rem, 4vw, 2.5rem);
-    max-width: 90vw;
-    width: 500px;
-    max-height: 90vh;
-    overflow-y: auto;
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-    position: relative;
-    animation: slideUp 0.4s ease-out;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.05)
+  );
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  max-width: 90vw;
+  width: 500px;
+  max-height: 90vh;
+  overflow-y: auto;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: slideUp 0.4s ease-out;
 }
 
 .modal-close {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 }
 
 .modal-close:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
 }
 
 .result-content {
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
 
 .result-content.win {
-    animation: celebration 0.6s ease-out;
+  animation: celebration 0.6s ease-out;
 }
 
 .result-content.lose {
-    animation: fadeInUp 0.6s ease-out;
+  animation: fadeInUp 0.6s ease-out;
 }
 
 .result-icon {
-    font-size: clamp(3rem, 8vw, 5rem);
-    margin-bottom: 1rem;
-    animation: bounce 1s infinite;
+  font-size: clamp(3rem, 8vw, 5rem);
+  margin-bottom: 1rem;
+  animation: bounce 1s infinite;
 }
 
 .result-content h2 {
-    font-size: clamp(1.5rem, 4vw, 2.2rem);
-    margin-bottom: 1.5rem;
-    font-weight: 800;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: clamp(1.5rem, 4vw, 2.2rem);
+  margin-bottom: 1.5rem;
+  font-weight: 800;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .result-content.win h2 {
-    color: #2ed573;
-    text-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
+  color: #2ed573;
+  text-shadow: 0 0 20px rgba(46, 213, 115, 0.3);
 }
 
 .result-content.lose h2 {
-    color: #ff4757;
-    text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
+  color: #ff4757;
+  text-shadow: 0 0 20px rgba(255, 71, 87, 0.3);
 }
 
 .result-stats {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 2rem 0;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 15px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 2rem 0;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .result-stat {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.8rem;
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
 }
 
 .stat-icon {
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
+  font-size: clamp(1.2rem, 3vw, 1.5rem);
 }
 
 .stat-text {
-    color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .stat-text strong {
-    color: white;
-    font-weight: 700;
+  color: white;
+  font-weight: 700;
 }
 
 .modal-buttons {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    margin-top: 2rem;
-    flex-wrap: wrap;
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  flex-wrap: wrap;
 }
 
-.play-again-btn, .continue-btn {
-    background: linear-gradient(45deg, #667eea, #764ba2);
-    color: white;
-    border: none;
-    padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
-    border-radius: 25px;
-    font-family: 'Poppins', sans-serif;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-size: clamp(0.9rem, 2vw, 1.1rem);
-    min-width: 120px;
-    position: relative;
-    overflow: hidden;
+.play-again-btn,
+.continue-btn {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  padding: clamp(0.8rem, 2vw, 1rem) clamp(1.5rem, 4vw, 2rem);
+  border-radius: 25px;
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: clamp(0.9rem, 2vw, 1.1rem);
+  min-width: 120px;
+  position: relative;
+  overflow: hidden;
 }
 
 .continue-btn {
-    background: linear-gradient(45deg, #38a169, #48bb78);
+  background: linear-gradient(45deg, #38a169, #48bb78);
 }
 
-.play-again-btn:hover, .continue-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+.play-again-btn:hover,
+.continue-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.play-again-btn:active, .continue-btn:active {
-    transform: translateY(-1px);
+.play-again-btn:active,
+.continue-btn:active {
+  transform: translateY(-1px);
 }
 
 /* Buy Me a Coffee Button - Fixed Position (for Ko-fi button in index.html) */
 .buy-coffee-fixed {
-    position: fixed;
-    bottom: clamp(1rem, 3vw, 1.5rem);
-    right: clamp(1rem, 3vw, 1.5rem);
-    z-index: 1000;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
+  position: fixed;
+  bottom: clamp(1rem, 3vw, 1.5rem);
+  right: clamp(1rem, 3vw, 1.5rem);
+  z-index: 1000;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
 }
 
 .buy-coffee-fixed:hover {
-    opacity: 1;
+  opacity: 1;
 }
 
 .buy-coffee-fixed a {
-    display: block;
-    border-radius: 8px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+  display: block;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
 }
 
 .buy-coffee-fixed a:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
 .buy-coffee-fixed img {
-    border-radius: 8px;
-    max-width: 100%;
-    height: auto;
+  border-radius: 8px;
+  max-width: 100%;
+  height: auto;
 }
 
 /* Animations */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px) scale(0.9);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 @keyframes celebration {
-    0%, 100% {
-        transform: scale(1);
-    }
-    25% {
-        transform: scale(1.05) rotate(1deg);
-    }
-    75% {
-        transform: scale(1.05) rotate(-1deg);
-    }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05) rotate(1deg);
+  }
+  75% {
+    transform: scale(1.05) rotate(-1deg);
+  }
 }
 
 @keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% {
-        transform: translateY(0);
-    }
-    40% {
-        transform: translateY(-10px);
-    }
-    60% {
-        transform: translateY(-5px);
-    }
+  0%,
+  20%,
+  50%,
+  80%,
+  100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-10px);
+  }
+  60% {
+    transform: translateY(-5px);
+  }
 }
 
 /* Responsive Modal Styles */
 @media screen and (max-width: 768px) {
-    .modal-content {
-        width: 95vw;
-        padding: clamp(1rem, 3vw, 1.5rem);
-        border-radius: 15px;
-    }
-    
-    .modal-close {
-        width: 35px;
-        height: 35px;
-        font-size: 20px;
-        top: 10px;
-        right: 15px;
-    }
-    
-    .result-stats {
-        padding: 1rem;
-        gap: 0.8rem;
-    }
-    
-    .modal-buttons {
-        flex-direction: column;
-        align-items: center;
-        gap: 0.8rem;
-    }
-    
-    .play-again-btn, .continue-btn {
-        width: 100%;
-        max-width: 250px;
-    }
+  .modal-content {
+    width: 95vw;
+    padding: clamp(1rem, 3vw, 1.5rem);
+    border-radius: 15px;
+  }
+
+  .modal-close {
+    width: 35px;
+    height: 35px;
+    font-size: 20px;
+    top: 10px;
+    right: 15px;
+  }
+
+  .result-stats {
+    padding: 1rem;
+    gap: 0.8rem;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .play-again-btn,
+  .continue-btn {
+    width: 100%;
+    max-width: 250px;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .modal-content {
-        padding: 1rem;
-        border-radius: 12px;
-    }
-    
-    .result-stats {
-        padding: 0.8rem;
-        margin: 1rem 0;
-    }
-    
-    .result-stat {
-        font-size: clamp(0.9rem, 2vw, 1rem);
-        gap: 0.6rem;
-    }
+  .modal-content {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .result-stats {
+    padding: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .result-stat {
+    font-size: clamp(0.9rem, 2vw, 1rem);
+    gap: 0.6rem;
+  }
 }
 
 /* Additional spacing for extreme level to avoid reset button overlap */
 .app-container:has(.game-block.extreme) .game-stats {
-    margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0;
+  margin: clamp(1.5rem, 4vw, 2.2rem) 0 clamp(0.8rem, 2vw, 1.2rem) 0;
 }
 
 /* Mobile adjustments for extreme level stats */
 @media screen and (max-width: 768px) {
-    .app-container:has(.game-block.extreme) .game-stats {
-        margin: clamp(1.3rem, 3.5vw, 2rem) 0 clamp(0.6rem, 1.5vw, 1rem) 0;
-    }
+  .app-container:has(.game-block.extreme) .game-stats {
+    margin: clamp(1.3rem, 3.5vw, 2rem) 0 clamp(0.6rem, 1.5vw, 1rem) 0;
+  }
 }
 
 @media screen and (max-width: 480px) {
-    .app-container:has(.game-block.extreme) .game-stats {
-        margin: clamp(1.1rem, 3vw, 1.6rem) 0 clamp(0.4rem, 1vw, 0.8rem) 0;
-    }
+  .app-container:has(.game-block.extreme) .game-stats {
+    margin: clamp(1.1rem, 3vw, 1.6rem) 0 clamp(0.4rem, 1vw, 0.8rem) 0;
+  }
+}
+
+/* Landscape orientation optimizations for mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .app-container {
+    padding: clamp(0.2rem, 1vw, 0.5rem);
+  }
+
+  h1 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin: clamp(0.2rem, 0.5vw, 0.5rem) 0;
+  }
+
+  .game-block {
+    max-height: 75vh;
+    gap: clamp(0.1rem, 0.5vw, 0.3rem);
+  }
+
+  .game-stats {
+    margin: clamp(0.5rem, 1.5vw, 1rem) 0;
+    gap: clamp(0.2rem, 1vw, 0.5rem);
+  }
+
+  .stat {
+    padding: clamp(0.3rem, 1vw, 0.5rem) clamp(0.5rem, 1.5vw, 0.8rem);
+    min-width: clamp(45px, 10vw, 65px);
+  }
+
+  .difficulty-selector {
+    margin: clamp(0.5rem, 1.5vw, 1rem) 0;
+  }
+
+  .difficulty-selector h2 {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    margin-bottom: clamp(0.5rem, 1.5vw, 1rem);
+  }
+
+  .difficulty-buttons {
+    gap: clamp(0.5rem, 2vw, 1rem);
+  }
+
+  .difficulty-btn {
+    padding: clamp(0.6rem, 2vw, 0.8rem) clamp(1rem, 3vw, 1.5rem);
+    min-width: clamp(100px, 20vw, 140px);
+  }
+
+  .copyright-footer {
+    bottom: clamp(0.2rem, 1vw, 0.5rem);
+    font-size: clamp(0.5rem, 1vw, 0.7rem);
+  }
+}
+
+/* Ultra-wide screens optimization */
+@media screen and (min-width: 1920px) {
+  .game-block {
+    max-width: min(70vw, 900px);
+  }
+
+  .game-block.extreme {
+    max-width: min(65vw, 850px);
+    max-height: 90vh;
+  }
+
+  .difficulty-buttons {
+    max-width: 1200px;
+    gap: clamp(1.5rem, 3vw, 3rem);
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .card {
+    min-width: clamp(50px, 12vw, 70px);
+  }
+
+  .difficulty-btn {
+    padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+    min-height: 60px;
+  }
+
+  button.reset {
+    width: clamp(45px, 10vw, 65px);
+    height: clamp(45px, 10vw, 65px);
+  }
+
+  .modal-close {
+    width: 45px;
+    height: 45px;
+    font-size: 26px;
+  }
+}
+
+/* High DPI displays */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .card {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  button.reset {
+    border-width: 1px;
+  }
+
+  .stat {
+    border-width: 1px;
+  }
 }
