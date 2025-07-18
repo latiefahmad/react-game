@@ -325,11 +325,44 @@ h1 {
   /* Game screen keeps normal centering but shifted up */
   .app-container:has(.game-block) {
     padding: clamp(0.2rem, 1vw, 0.5rem);
-    justify-content: center;
-    transform: translateY(-15px); /* Shift entire game layout up */
+    justify-content: flex-start;
+    transform: translateY(-10px); /* Shift entire game layout up */
   }
 
-  h1 {
+  /* Create horizontal header layout for game screen */
+  .app-container:has(.game-block) .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 0.3rem 0.5rem;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+
+  .app-container:has(.game-block) h1 {
+    font-size: 1.4rem;
+    margin: 0;
+    flex: 1;
+    text-align: left;
+    padding-left: 0.5rem;
+  }
+
+  .app-container:has(.game-block) button.reset {
+    position: static;
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .app-container:has(.game-block) button.reset svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* Homepage title remains unchanged */
+  .app-container:has(.difficulty-selector) h1 {
     font-size: clamp(1.3rem, 3.5vw, 1.8rem);
     margin: clamp(0.2rem, 0.5vw, 0.4rem) 0;
   }
@@ -398,9 +431,22 @@ h1 {
   }
 
   .copyright-footer {
-    bottom: 0.2rem;
+    bottom: 0.3rem;
     font-size: 0.55rem;
     flex-shrink: 0;
+    z-index: 15;
+  }
+
+  /* Ensure Buy Me Coffee button is visible on iPhone 8 */
+  .buy-coffee-fixed {
+    bottom: 0.8rem;
+    right: 0.8rem;
+    z-index: 1001;
+  }
+
+  .buy-coffee-fixed img {
+    max-height: 32px;
+    width: auto;
   }
 }
 
