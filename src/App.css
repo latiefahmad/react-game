@@ -182,14 +182,36 @@ h1 {
     max-height: 70vh;
   }
 
+  .difficulty-selector {
+    margin: clamp(1.5rem, 4vw, 2.5rem) 0;
+    min-height: 50vh;
+    padding: 0 clamp(0.8rem, 2vw, 1.5rem);
+  }
+
+  .difficulty-selector h2 {
+    font-size: clamp(1.6rem, 4.5vw, 2.5rem);
+    margin-bottom: clamp(1.5rem, 3.5vw, 2.5rem);
+  }
+
   .difficulty-buttons {
-    padding: 0 1rem;
-    gap: clamp(0.6rem, 2.5vw, 1.5rem);
+    padding: 0;
+    gap: clamp(0.8rem, 2.5vw, 1.5rem);
+    flex-wrap: wrap;
   }
 
   .difficulty-btn {
-    min-width: clamp(100px, 22vw, 160px);
-    padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1.2rem, 3.5vw, 2rem);
+    min-width: clamp(120px, 25vw, 180px);
+    min-height: clamp(70px, 10vw, 90px);
+    padding: clamp(1rem, 3vw, 1.4rem) clamp(1.5rem, 4vw, 2.2rem);
+    font-size: clamp(0.95rem, 2.6vw, 1.3rem);
+  }
+
+  .diff-name {
+    font-size: clamp(1.1rem, 3vw, 1.6rem);
+  }
+
+  .diff-info {
+    font-size: clamp(0.85rem, 2.2vw, 1.1rem);
   }
 }
 
@@ -232,22 +254,42 @@ h1 {
   }
 
   .difficulty-selector {
-    margin: clamp(0.8rem, 2.5vw, 1.5rem) 0;
-    padding: 0 0.5rem;
+    margin: clamp(1rem, 3vw, 2rem) 0;
+    padding: 0 clamp(0.5rem, 2vw, 1rem);
+    min-height: 70vh;
+    justify-content: center;
+  }
+
+  .difficulty-selector h2 {
+    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.1;
   }
 
   .difficulty-buttons {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    gap: clamp(0.5rem, 2vw, 1rem);
+    gap: clamp(0.8rem, 3vw, 1.5rem);
+    width: 100%;
   }
 
   .difficulty-btn {
     width: 100%;
-    max-width: 280px;
+    max-width: clamp(260px, 85vw, 320px);
     min-width: auto;
-    padding: clamp(0.7rem, 2vw, 1rem) clamp(1rem, 3vw, 1.5rem);
+    min-height: clamp(65px, 12vw, 85px);
+    padding: clamp(1rem, 3vw, 1.4rem) clamp(1.2rem, 4vw, 1.8rem);
+    font-size: clamp(0.9rem, 2.5vw, 1.2rem);
+    border-radius: clamp(10px, 2vw, 15px);
+  }
+
+  .diff-name {
+    font-size: clamp(1rem, 2.8vw, 1.4rem);
+  }
+
+  .diff-info {
+    font-size: clamp(0.8rem, 2.1vw, 1rem);
   }
 
   .game-stats {
@@ -268,6 +310,15 @@ h1 {
 
 /* Very small screens */
 @media screen and (max-width: 360px) {
+  .app-container {
+    padding: clamp(0.1rem, 0.8vw, 0.4rem);
+  }
+
+  h1 {
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    margin: clamp(0.2rem, 0.8vw, 0.6rem) 0;
+  }
+
   .game-block {
     max-height: 55vh;
     gap: clamp(0.05rem, 0.4vw, 0.2rem);
@@ -284,8 +335,38 @@ h1 {
     max-width: min(100px, 12vw);
   }
 
-  h1 {
-    font-size: clamp(1.3rem, 4vw, 2rem);
+  /* Homepage specific adjustments for very small screens */
+  .difficulty-selector {
+    margin: clamp(0.5rem, 2vw, 1.5rem) 0;
+    padding: 0 clamp(0.3rem, 1.5vw, 0.8rem);
+    min-height: 75vh;
+  }
+
+  .difficulty-selector h2 {
+    font-size: clamp(1.2rem, 3.5vw, 1.8rem);
+    margin-bottom: clamp(1rem, 3vw, 2rem);
+    line-height: 1.1;
+  }
+
+  .difficulty-btn {
+    max-width: clamp(240px, 90vw, 300px);
+    min-height: clamp(60px, 11vw, 80px);
+    padding: clamp(0.8rem, 2.5vw, 1.2rem) clamp(1rem, 3.5vw, 1.5rem);
+    font-size: clamp(0.85rem, 2.3vw, 1.1rem);
+    gap: clamp(0.2rem, 0.8vw, 0.4rem);
+  }
+
+  .diff-name {
+    font-size: clamp(0.95rem, 2.5vw, 1.3rem);
+  }
+
+  .diff-info {
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+  }
+
+  .copyright-footer {
+    bottom: clamp(0.2rem, 1vw, 0.6rem);
+    font-size: clamp(0.55rem, 1.1vw, 0.75rem);
   }
 }
 
@@ -412,71 +493,105 @@ footer {
 
 /* Difficulty Selector Styles */
 .difficulty-selector {
-  margin: clamp(1rem, 3vw, 2rem) 0;
+  margin: clamp(2rem, 5vw, 3rem) 0;
   text-align: center;
-  padding: 0 1rem;
+  padding: 0 clamp(1rem, 3vw, 2rem);
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 60vh;
 }
 
 .difficulty-selector h2 {
   color: white;
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
-  margin-bottom: clamp(1rem, 2.5vw, 1.5rem);
-  font-weight: 600;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-size: clamp(1.8rem, 5vw, 3rem);
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.7);
+  line-height: 1.2;
 }
 
 .difficulty-buttons {
   display: flex;
-  gap: clamp(0.8rem, 3vw, 2rem);
+  gap: clamp(1rem, 3vw, 2rem);
   justify-content: center;
   flex-wrap: wrap;
   max-width: 100%;
   width: 100%;
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .difficulty-btn {
-  padding: clamp(1rem, 3vw, 1.5rem) clamp(1.5rem, 4vw, 2.5rem);
+  padding: clamp(1.2rem, 3.5vw, 1.8rem) clamp(1.8rem, 4.5vw, 2.8rem);
   border: none;
-  border-radius: clamp(8px, 1.5vw, 15px);
+  border-radius: clamp(12px, 2vw, 18px);
   color: white;
   font-family: "Poppins", sans-serif;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  min-width: clamp(120px, 25vw, 180px);
+  min-width: clamp(140px, 28vw, 200px);
+  min-height: clamp(80px, 12vw, 100px);
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: clamp(0.9rem, 2.5vw, 1.3rem);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  gap: 0.3rem;
+  font-size: clamp(1rem, 2.8vw, 1.4rem);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  gap: clamp(0.3rem, 1vw, 0.5rem);
+  position: relative;
+  overflow: hidden;
+}
+
+.difficulty-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s;
+}
+
+.difficulty-btn:hover::before {
+  left: 100%;
 }
 
 .difficulty-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.difficulty-btn:active {
+  transform: translateY(-2px) scale(0.98);
 }
 
 .difficulty-btn.active {
   transform: scale(1.05);
-  box-shadow: 0 6px 25px rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 30px rgba(255, 255, 255, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .diff-name {
-  font-size: clamp(1.1rem, 3vw, 1.6rem);
+  font-size: clamp(1.2rem, 3.2vw, 1.8rem);
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .diff-info {
-  font-size: clamp(0.9rem, 2.3vw, 1.1rem);
+  font-size: clamp(0.9rem, 2.4vw, 1.2rem);
   opacity: 0.9;
   font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Game Stats Styles */
