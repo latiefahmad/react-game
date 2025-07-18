@@ -326,10 +326,41 @@ h1 {
   .app-container:has(.game-block) {
     padding: clamp(0.2rem, 1vw, 0.5rem);
     justify-content: center;
-    transform: translateY(-15px); /* Shift entire game layout up */
+    transform: translateY(-25px); /* Shift entire game layout up more */
   }
 
-  h1 {
+  /* Create horizontal header layout for game screen */
+  .app-container:has(.game-block) .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+
+  .app-container:has(.game-block) h1 {
+    font-size: 1.4rem;
+    margin: 0;
+    flex: 1;
+    text-align: center;
+  }
+
+  .app-container:has(.game-block) button.reset {
+    position: static;
+    width: 35px;
+    height: 35px;
+    margin: 0;
+    flex-shrink: 0;
+  }
+
+  .app-container:has(.game-block) button.reset svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  /* Homepage title remains unchanged */
+  .app-container:has(.difficulty-selector) h1 {
     font-size: clamp(1.3rem, 3.5vw, 1.8rem);
     margin: clamp(0.2rem, 0.5vw, 0.4rem) 0;
   }
